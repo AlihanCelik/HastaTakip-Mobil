@@ -1,7 +1,6 @@
 package com.alihan.hastatakipuygulamas.domain.repository
 
 import com.alihan.hastatakipuygulamas.data.model.Hasta
-import com.alihan.hastatakipuygulamas.domain.model.HastaDomainModel
 
 interface HastaRepository {
     suspend fun getAllPatients(): List<Hasta>
