@@ -23,7 +23,7 @@ class HastaRepositoryImpl @Inject constructor( private val hastaApi: HastaApi) :
     }
 
     override suspend fun deletePatient(id: Long) {
-        return deletePatient(id)
+        return hastaApi.deletePatient(id)
     }
 
 }
