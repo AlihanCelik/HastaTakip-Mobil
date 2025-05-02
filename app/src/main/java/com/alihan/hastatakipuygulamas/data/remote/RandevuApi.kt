@@ -9,18 +9,18 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface RandevuApi {
-    @GET("/tumRandevular")
+    @GET("api/randevu/tumRandevular")
     suspend fun getAllRandevu(): List<Randevu>
 
-    @GET("/hasta/{hastaId}")
+    @GET("api/randevu/hasta/{hastaId}")
     suspend fun getRandevuByHastaId(@Path("hastaId") hastaId: Long): List<Randevu>
 
-    @POST("/ekle")
+    @POST("api/randevu/ekle")
     suspend fun addRandevu(@Body randevu: Randevu): Randevu
 
-    @PUT("/guncelle/{id}")
+    @PUT("api/randevu/guncelle/{id}")
     suspend fun updateRandevu(@Path("id") id: Long, @Body randevu: Randevu): Randevu
 
-    @DELETE("/sil/{id}")
+    @DELETE("api/randevu/sil/{id}")
     suspend fun deleteRandevu(@Path("id") id: Long)
 }

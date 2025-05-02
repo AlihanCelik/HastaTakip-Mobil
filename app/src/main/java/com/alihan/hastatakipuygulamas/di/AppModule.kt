@@ -1,14 +1,23 @@
 package com.alihan.hastatakipuygulamas.di
 
 import com.alihan.hastatakipuygulamas.data.remote.HastaApi
+import com.alihan.hastatakipuygulamas.data.remote.RandevuApi
 import com.alihan.hastatakipuygulamas.data.repository.HastaRepositoryImpl
+import com.alihan.hastatakipuygulamas.data.repository.RandevuRepositoryImpl
 import com.alihan.hastatakipuygulamas.domain.repository.HastaRepository
+import com.alihan.hastatakipuygulamas.domain.repository.RandevuRepository
 import com.alihan.hastatakipuygulamas.domain.usecase.Hasta.AddPatientUseCase
 import com.alihan.hastatakipuygulamas.domain.usecase.Hasta.DeletePatientUseCase
 import com.alihan.hastatakipuygulamas.domain.usecase.Hasta.GetAllPatientsUseCase
 import com.alihan.hastatakipuygulamas.domain.usecase.Hasta.GetPatientByIdUseCase
 import com.alihan.hastatakipuygulamas.domain.usecase.Hasta.UpdatePatientUseCase
 import com.alihan.hastatakipuygulamas.domain.usecase.HastaUseCase
+import com.alihan.hastatakipuygulamas.domain.usecase.Randevu.AddRandevuUseCase
+import com.alihan.hastatakipuygulamas.domain.usecase.Randevu.DeleteRandevuUseCase
+import com.alihan.hastatakipuygulamas.domain.usecase.Randevu.GetAllRandevuUseCase
+import com.alihan.hastatakipuygulamas.domain.usecase.Randevu.GetRandevuByHastaIdUseCase
+import com.alihan.hastatakipuygulamas.domain.usecase.Randevu.UpdateRandevuUseCase
+import com.alihan.hastatakipuygulamas.domain.usecase.RandevuUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,16 +30,31 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-
-    // Retrofit Sağlayıcısı
     @Provides
     @Singleton
-    fun provideHastaApi(): HastaApi {
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/api/hasta")
+            .baseUrl("http://10.0.2.2:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(HastaApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHastaApi(retrofit: Retrofit): HastaApi {
+        return retrofit.create(HastaApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRandevuApi(retrofit: Retrofit): RandevuApi {
+        return retrofit.create(RandevuApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRandevuRepository(api: RandevuApi): RandevuRepository {
+        return RandevuRepositoryImpl(api)
     }
 
     // Repository Sağlayıcısı
@@ -50,5 +74,20 @@ object AppModule {
             updatePatient = UpdatePatientUseCase(repository),
             deletePatient = DeletePatientUseCase(repository)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideRandevuUseCases(repository: RandevuRepository): RandevuUseCase {
+        return RandevuUseCase(
+            getAllRandevu = GetAllRandevuUseCase(repository),
+            getRandevuByHastaId = GetRandevuByHastaIdUseCase(repository),
+            addRandevu = AddRandevuUseCase(repository),
+            updateRandevu = UpdateRandevuUseCase(repository),
+            deleteRandevu = DeleteRandevuUseCase(repository)
+        )
+
+
+
     }
 }

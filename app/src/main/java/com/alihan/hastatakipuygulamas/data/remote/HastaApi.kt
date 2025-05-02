@@ -10,18 +10,18 @@ import retrofit2.http.Path
 
 interface HastaApi {
 
-    @GET("/tumHastalar")
+    @GET("api/hasta/tumHastalar")
     suspend fun getAllPatients(): List<Hasta>
 
-    @GET("/{id}")
+    @GET("api/hasta/{id}")
     suspend fun getPatientById(@Path("id") id: Long): Hasta
 
-    @POST("/ekle")
+    @POST("api/hasta/ekle")
     suspend fun addPatient(@Body hasta: Hasta): Hasta
 
-    @PUT("/guncelle/{id}")
+    @PUT("api/hasta/guncelle/{id}")
     suspend fun updatePatient(@Path("id") id: Long, @Body hasta: Hasta): Hasta
 
-    @DELETE("/sil/{id}")
+    @DELETE("api/hasta/sil/{id}")
     suspend fun deletePatient(@Path("id") id: Long)
 }
