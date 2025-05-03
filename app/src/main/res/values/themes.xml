@@ -1,9 +1,55 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.HastaTakipUygulaması" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
 
-    <style name="Theme.HastaTakipUygulaması" parent="Base.Theme.HastaTakipUygulaması" />
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+<!-- Base application theme. -->
+<style name="Base.Theme.HastaTakipUygulaması" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <!-- Primary brand color. -->
+    <item name="colorPrimary">#007aff</item>
+    <item name="colorPrimaryVariant">#DF1515</item>
+    <item name="colorOnPrimary">@color/white</item>
+    <!-- Secondary brand color. -->
+    <item name="colorSecondary">#007aff</item>
+    <item name="colorSecondaryVariant">@color/teal_700</item>
+    <item name="colorOnSecondary">@color/black</item>
+    <!-- Status bar color. -->
+    <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    <!-- Customize your theme here. -->
+</style>
+
+<style name="GeriButtonViewStyle">
+    <item name="android:tint">@color/AdvGrey</item>
+</style>
+
+<style name="LineraLayoutColor">
+    <item name="android:background">@color/white</item>
+</style>
+
+<style name="ButtonViewStyle">
+    <item name="android:tint">@color/white</item>
+</style>
+
+<style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+</style>
+
+<style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+    <item name="android:background">@android:color/transparent</item>
+</style>
+
+<style name="Yazı_style">
+    <item name="android:textColor">@color/black</item>
+</style>
+
+<style name="ThemeOverlay.search" parent="Theme.AppCompat">
+    <item name="android:editTextColor">#202020</item>
+    <item name="android:textColorHint">#202020</item>
+</style>
+
+<style name="ThemeOverlay.search2" parent="Theme.AppCompat">
+    <item name="android:editTextColor">#202020</item>
+    <item name="android:textColorHint">#202020</item>
+</style>
+
+<style name="CardViewColor2">
+    <item name="android:backgroundTint">#C30000</item>
+</style>
 </resources>

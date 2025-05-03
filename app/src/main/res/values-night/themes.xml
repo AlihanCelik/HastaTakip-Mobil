@@ -1,7 +1,41 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.HastaTakipUygulaması" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+<!-- Base application theme. -->
+<style name="Base.Theme.HastaTakipUygulaması" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <!-- Primary brand color. -->
+    <item name="colorPrimary">#007aff</item>
+    <item name="colorPrimaryVariant">#DF1515</item>
+    <item name="colorOnPrimary">#212121</item>
+    <!-- Secondary brand color. -->
+    <item name="colorSecondary">#007aff</item>
+    <item name="colorSecondaryVariant">@color/teal_200</item>
+    <item name="colorOnSecondary">#212121</item>
+    <!-- Status bar color. -->
+    <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    <!-- Customize your theme here. -->
+</style>
+<style name="GeriButtonViewStyle">
+    <item name="android:tint">#b8b8b8</item>
+</style>
+<style name="LineraLayoutColor">
+    <item name="android:background">#202020</item>
+</style>
+<style name="ButtonViewStyle">
+    <item name="android:tint">@color/AdvGrey</item>
+</style>
+<style name="Yazı_style">
+    <item name="android:textColor">@color/white</item>
+</style>
+<style name="CardViewColor">
+    <item name="android:backgroundTint">#202020</item>
+</style>
+<style name="ThemeOverlay.search" parent="Theme.AppCompat">
+    <item name="android:editTextColor">@color/grey</item>
+    <item name="android:textColorHint">@color/grey</item>
+    <item name="strokeColor">#202020</item>
+</style>
+
+<style name="CardViewColor2">
+    <item name="android:backgroundTint">#C30000</item>
+</style>
+
 </resources>
