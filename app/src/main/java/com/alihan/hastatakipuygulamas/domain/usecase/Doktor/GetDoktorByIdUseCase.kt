@@ -1,0 +1,9 @@
+package com.alihan.hastatakipuygulamas.domain.usecase.Doktor
+
+import com.alihan.hastatakipuygulamas.domain.repository.DoktorRepository
+import javax.inject.Inject
+
+class GetDoktorByIdUseCase @Inject constructor(private val repository: DoktorRepository)  {
+    suspend operator fun invoke(id: Long) = repository.getDoktorById(id)
+
+}
