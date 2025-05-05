@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.alihan.hastatakipuygulamas"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.alihan.hastatakipuygulamas"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -42,7 +42,7 @@ android {
 
 dependencies {
     val nav_version = "2.8.9"
-    val hilt_version = "2.43.2"
+    val hilt_version = "2.56.1"
     val retrofitVersion = "2.9.0"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -59,9 +59,11 @@ dependencies {
 
     implementation ("com.google.dagger:hilt-android:$hilt_version")
     kapt ("com.google.dagger:hilt-android-compiler:$hilt_version")
-    kapt ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
 
     implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation ("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation ("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
+}
+kapt {
+    correctErrorTypes = true
 }
