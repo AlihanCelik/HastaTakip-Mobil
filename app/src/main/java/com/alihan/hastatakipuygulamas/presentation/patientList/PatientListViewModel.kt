@@ -14,21 +14,20 @@ import javax.inject.Inject
 @HiltViewModel
 class PatientListViewModel @Inject
     constructor( private val getAllPatientsUseCase: GetAllPatientsUseCase) : ViewModel() {
-    private val _patients = MutableLiveData<List<Hasta>>(emptyList())
-    val patients: LiveData<List<Hasta>> = _patients
+    private val _state = MutableLiveData<PatientListState>()
+    val state: LiveData<PatientListState> = _state
 
     fun fetchPatients() {
+        _state.value = PatientListState.Loading
+
         viewModelScope.launch {
             try {
                 val result = getAllPatientsUseCase()
-                _patients.value = result
-                println(_patients.value)
+                _state.value = PatientListState.Success(result)
             } catch (e: Exception) {
-                Log.e("PatientListVM", "Fetch failed", e)
-                _patients.value = emptyList()
+                _state.value = PatientListState.Error("Veriler alınırken hata oluştu")
             }
         }
-        println(_patients.value)
     }
 
 }

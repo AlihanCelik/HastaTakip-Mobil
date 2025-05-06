@@ -59,18 +59,38 @@
 
                             </ImageView>
 
-
-                            <TextView
-                                android:id="@+id/item_name"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_marginLeft="25dp"
                                 android:layout_marginRight="10dp"
-                                android:textStyle="bold"
-                                android:text="@{hasta.ad}">
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/item_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
 
-                            </TextView>
+                                    android:textStyle="bold"
+                                    android:text='@{hasta.ad + " " + hasta.soyad}'>
+
+                                </TextView>
+                                <TextView
+                                    android:id="@+id/item_tc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:text='@{"TC:" + hasta.tcKimlikNo}'>
+
+                                </TextView>
+
+                            </LinearLayout>
+
+
+
 
 
 
@@ -86,7 +106,9 @@
                                 android:layout_marginRight="5dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/right"
-                                style="@style/GeriButtonViewStyle"></ImageView>
+                                style="@style/GeriButtonViewStyle">
+
+                            </ImageView>
 
 
                         </LinearLayout>

@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.swiperefreshlayout)
     val nav_version = "2.8.9"
     val hilt_version = "2.56.1"
     val retrofitVersion = "2.9.0"
