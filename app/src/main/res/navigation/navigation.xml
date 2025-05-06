@@ -27,7 +27,16 @@
         android:id="@+id/patientListFragment"
         android:name="com.alihan.hastatakipuygulamas.presentation.patientList.PatientListFragment"
         android:label="fragment_patient_list"
-        tools:layout="@layout/fragment_patient_list" />
+        tools:layout="@layout/fragment_patient_list" >
+        <action
+            android:id="@+id/action_patientListFragment_to_patientInfoFragment"
+            app:destination="@id/patientInfoFragment" >
+            <argument
+                android:name="hasta"
+                app:argType="com.alihan.hastatakipuygulamas.domain.model.Hasta"
+                app:nullable="false" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/doktorListFragment"
         android:name="com.alihan.hastatakipuygulamas.presentation.DoktorListFragment"
@@ -43,4 +52,9 @@
         android:name="com.alihan.hastatakipuygulamas.presentation.TeshisTedaviFragment"
         android:label="fragment_teshis_tedavi"
         tools:layout="@layout/fragment_teshis_tedavi" />
+    <fragment
+        android:id="@+id/patientInfoFragment"
+        android:name="com.alihan.hastatakipuygulamas.presentation.PatientInfoFragment"
+        android:label="fragment_patient_info"
+        tools:layout="@layout/fragment_patient_info" />
 </navigation>

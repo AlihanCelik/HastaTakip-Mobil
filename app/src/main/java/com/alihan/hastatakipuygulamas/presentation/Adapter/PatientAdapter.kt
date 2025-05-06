@@ -1,8 +1,11 @@
 package com.alihan.hastatakipuygulamas.presentation.Adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.data.model.Hasta
@@ -27,6 +30,12 @@ class PatientAdapter : RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() 
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
         holder.view.hasta = hastaList[position]
+        holder.itemView.setOnClickListener{
+            val action = PatientListFragmentDirections
+                .actionPatientListFragmentToPatientInfoFragment(hastaList[position])
+            findNavController().navigate(action)
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -34,4 +43,6 @@ class PatientAdapter : RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() 
     }
 
     class PatientViewHolder(var view: ItemPatientBinding) : RecyclerView.ViewHolder(view.root)
+
+
 }

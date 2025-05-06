@@ -5,6 +5,9 @@
         <variable
             name="hasta"
             type="com.alihan.hastatakipuygulamas.data.model.Hasta" />
+        <variable
+            name="listener"
+            type="com.alihan.hastatakipuygulamas.presentation.Adapter.PatientAdapter.PatientItemClickListener" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
