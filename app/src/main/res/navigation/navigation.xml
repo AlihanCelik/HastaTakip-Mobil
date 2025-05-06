@@ -14,8 +14,14 @@
             android:id="@+id/action_homeFragment_to_patientListFragment"
             app:destination="@id/patientListFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_addPatientFragment"
-            app:destination="@id/addPatientFragment" />
+            android:id="@+id/action_homeFragment_to_teshisTedaviFragment"
+            app:destination="@id/teshisTedaviFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_doktorListFragment"
+            app:destination="@id/doktorListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_randevuFragment"
+            app:destination="@id/randevuFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientListFragment"
@@ -23,8 +29,18 @@
         android:label="fragment_patient_list"
         tools:layout="@layout/fragment_patient_list" />
     <fragment
-        android:id="@+id/addPatientFragment"
-        android:name="com.alihan.hastatakipuygulamas.presentation.addPatient.AddPatientFragment"
-        android:label="fragment_add_patient"
-        tools:layout="@layout/fragment_add_patient" />
+        android:id="@+id/doktorListFragment"
+        android:name="com.alihan.hastatakipuygulamas.presentation.DoktorListFragment"
+        android:label="fragment_doktor_list"
+        tools:layout="@layout/fragment_doktor_list" />
+    <fragment
+        android:id="@+id/randevuFragment"
+        android:name="com.alihan.hastatakipuygulamas.presentation.RandevuFragment"
+        android:label="fragment_randevu"
+        tools:layout="@layout/fragment_randevu" />
+    <fragment
+        android:id="@+id/teshisTedaviFragment"
+        android:name="com.alihan.hastatakipuygulamas.presentation.TeshisTedaviFragment"
+        android:label="fragment_teshis_tedavi"
+        tools:layout="@layout/fragment_teshis_tedavi" />
 </navigation>

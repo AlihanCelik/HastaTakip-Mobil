@@ -63,6 +63,8 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation ("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation ("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
+
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }
 kapt {
     correctErrorTypes = true

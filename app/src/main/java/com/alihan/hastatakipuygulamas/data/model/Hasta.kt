@@ -1,7 +1,5 @@
 package com.alihan.hastatakipuygulamas.data.model
 
-import java.time.LocalDate
-
 
 
 data class Hasta(
@@ -9,11 +7,10 @@ data class Hasta(
     val ad: String,
     val soyad: String,
     val tcKimlikNo: String,
-    val dogumTarihi: LocalDate,
+    val dogumTarihi: String="a",
     val cinsiyet: String,
     val telefon: String,
     val email: String,
     val adres: String,
     val acilDurumKisi: String,
 )
-
