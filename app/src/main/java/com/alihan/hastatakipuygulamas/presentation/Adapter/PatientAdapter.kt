@@ -1,15 +1,15 @@
 package com.alihan.hastatakipuygulamas.presentation.Adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.data.model.Hasta
 import com.alihan.hastatakipuygulamas.databinding.ItemPatientBinding
+import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListFragmentDirections
 
 class PatientAdapter : RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() {
 
@@ -29,11 +29,14 @@ class PatientAdapter : RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
-        holder.view.hasta = hastaList[position]
-        holder.itemView.setOnClickListener{
+        val hasta = hastaList[position]
+        holder.view.hasta = hasta
+        holder.view.itemLy.setOnClickListener{
+            println("aaaa")
             val action = PatientListFragmentDirections
-                .actionPatientListFragmentToPatientInfoFragment(hastaList[position])
-            findNavController().navigate(action)
+                .actionPatientListFragmentToPatientInfoFragment(hasta)
+            findNavController(holder.itemView).navigate(action)
+
 
         }
     }

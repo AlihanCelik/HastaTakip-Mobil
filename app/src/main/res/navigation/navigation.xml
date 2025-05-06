@@ -33,7 +33,7 @@
             app:destination="@id/patientInfoFragment" >
             <argument
                 android:name="hasta"
-                app:argType="com.alihan.hastatakipuygulamas.domain.model.Hasta"
+                app:argType="com.alihan.hastatakipuygulamas.data.model.Hasta"
                 app:nullable="false" />
         </action>
     </fragment>
@@ -54,7 +54,12 @@
         tools:layout="@layout/fragment_teshis_tedavi" />
     <fragment
         android:id="@+id/patientInfoFragment"
-        android:name="com.alihan.hastatakipuygulamas.presentation.PatientInfoFragment"
+        android:name="com.alihan.hastatakipuygulamas.presentation.PatientInfo.PatientInfoFragment"
         android:label="fragment_patient_info"
-        tools:layout="@layout/fragment_patient_info" />
+        tools:layout="@layout/fragment_patient_info" >
+        <argument
+            android:name="hasta"
+            app:argType="com.alihan.hastatakipuygulamas.data.model.Hasta" />
+    </fragment>
+
 </navigation>
