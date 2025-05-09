@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.databinding.FragmentPatientListBinding
 import com.alihan.hastatakipuygulamas.presentation.Adapter.PatientAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,8 +44,13 @@ class PatientListFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.fetchPatients()
         }
+        binding.hastaEkleBtn.setOnClickListener{
+            findNavController().navigate(R.id.action_patientListFragment_to_addPatientFragment)
+        }
 
-        viewModel.state.observe(viewLifecycleOwner) { state ->
+        binding.
+
+        viewModel!!.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is PatientListState.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE

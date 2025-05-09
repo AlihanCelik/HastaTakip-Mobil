@@ -99,7 +99,7 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/kayip_ilani_ver_btn"
+            android:id="@+id/hasta_ekle_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
