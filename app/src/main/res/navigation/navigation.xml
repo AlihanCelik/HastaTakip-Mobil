@@ -83,6 +83,17 @@
     <fragment
         android:id="@+id/addDoktorFragment"
         android:name="com.alihan.hastatakipuygulamas.presentation.addDoktor.AddDoktorFragment"
-        android:label="AddDoktorFragment" />
+        android:label="AddDoktorFragment" >
+        <argument
+            android:name="doktor"
+            app:argType="com.alihan.hastatakipuygulamas.data.model.Doktor" />
+        <action
+            android:id="@+id/action_addDoktorFragment_to_doktorInfoFragment"
+            app:destination="@id/doktorInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/doktorInfoFragment"
+        android:name="com.alihan.hastatakipuygulamas.presentation.doktorInfo.DoktorInfoFragment"
+        android:label="DoktorInfoFragment" />
 
 </navigation>

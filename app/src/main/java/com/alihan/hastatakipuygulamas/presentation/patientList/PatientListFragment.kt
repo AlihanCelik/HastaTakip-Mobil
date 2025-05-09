@@ -48,8 +48,6 @@ class PatientListFragment : Fragment() {
             findNavController().navigate(R.id.action_patientListFragment_to_addPatientFragment)
         }
 
-        binding.
-
         viewModel!!.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is PatientListState.Loading -> {

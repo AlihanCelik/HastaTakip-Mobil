@@ -89,7 +89,7 @@
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/hastaRcw"
+                    android:id="@+id/doktorRcw"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone" />
@@ -122,7 +122,7 @@
                     android:layout_width="30dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/patient"
+                    android:src="@drawable/doctor"
                     app:tint="@color/white" />
 
                 <TextView
@@ -131,7 +131,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
 
-                    android:text="Hasta Ekle"
+                    android:text="Doktor Ekle"
                     android:textColor="@color/white"
                     android:textStyle="bold"></TextView>
             </LinearLayout>
