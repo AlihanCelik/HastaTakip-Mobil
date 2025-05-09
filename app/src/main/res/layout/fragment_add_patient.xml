@@ -88,8 +88,7 @@
                         android:id="@+id/ad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="11"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:lines="1">
 
                     </com.google.android.material.textfield.TextInputEditText>
@@ -107,8 +106,7 @@
                         android:id="@+id/soyad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="11"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:lines="1">
 
                     </com.google.android.material.textfield.TextInputEditText>
@@ -145,8 +143,7 @@
                         android:id="@+id/dogum_tarihi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="11"
-                        android:inputType="number"
+                        android:inputType="date"
                         android:lines="1">
 
                     </com.google.android.material.textfield.TextInputEditText>
@@ -242,8 +239,7 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="11"
-                        android:inputType="number"
+                        android:inputType="textEmailAddress"
                         android:lines="1">
 
                     </com.google.android.material.textfield.TextInputEditText>
@@ -279,9 +275,8 @@
                         android:id="@+id/adres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="11"
-                        android:inputType="number"
-                        android:lines="1">
+                        android:inputType="text"
+                        android:lines="4">
 
                     </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -297,28 +292,43 @@
                         android:id="@+id/acil_durum_kisi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="11"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:lines="1">
 
                     </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/kayıtol_button"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="100dp"
-                    android:text="Kaydet"
-                    android:backgroundTint="@color/red2"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    app:cornerRadius="10dp" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:orientation="vertical">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/kaydet_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Kaydet"
+                        android:backgroundTint="@color/red2"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:cornerRadius="10dp" >
 
-                </com.google.android.material.button.MaterialButton>
+                    </com.google.android.material.button.MaterialButton>
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/loadingProgressBar"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:visibility="gone"
+                        android:indeterminate="true">
+
+                    </ProgressBar>
+                </LinearLayout>
+
+
+
 
             </LinearLayout>
 

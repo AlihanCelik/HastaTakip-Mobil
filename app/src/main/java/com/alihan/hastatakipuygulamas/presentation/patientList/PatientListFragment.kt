@@ -73,6 +73,12 @@ class PatientListFragment : Fragment() {
                 }
             }
         }
+        parentFragmentManager.setFragmentResultListener("hasta_eklendi", viewLifecycleOwner) { _, result ->
+            val eklendi = result.getBoolean("eklendi", false)
+            if (eklendi) {
+                viewModel.fetchPatients() // Listeyi güncelle
+            }
+        }
 
 
         viewModel.fetchPatients()

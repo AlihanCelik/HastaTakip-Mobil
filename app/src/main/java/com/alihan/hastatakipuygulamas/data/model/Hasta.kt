@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Hasta(
-    private val id: Long,
+    val id: Long? = null,
     val ad: String,
     val soyad: String,
     val tcKimlikNo: String,
