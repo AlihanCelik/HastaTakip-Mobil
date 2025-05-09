@@ -1,14 +1,21 @@
 package com.alihan.hastatakipuygulamas.presentation.patientBilgi
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.data.model.Hasta
 import com.alihan.hastatakipuygulamas.databinding.FragmentPatientInfoBinding
+import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListState
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -38,11 +45,34 @@ class PatientInfoFragment : Fragment() {
             hasta=PatientInfoFragmentArgs.fromBundle(it!!).hasta
         }
         binding.hasta=hasta
+        binding.delete.setOnClickListener {
+            viewModel.deletePatients(hasta?.id!!)
+        }
+
+
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is PatientDeleteState.Loading -> {
+                }
+                is PatientDeleteState.Success -> {
+                    Snackbar.make(binding.root, "Hasta başarıyla silindi", Snackbar.LENGTH_SHORT).show()
+                    setFragmentResult("hasta_eklendi", bundleOf("eklendi" to true))
+                    findNavController().popBackStack()
+                }
+                is PatientDeleteState.Error -> {
+                    Snackbar.make(binding.root, "Hasta silinemedi", Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         return binding.root
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun showDialog(){
+
     }
 }

@@ -52,4 +52,5 @@
 <style name="CardViewColor2">
     <item name="android:backgroundTint">#C30000</item>
 </style>
+
 </resources>
