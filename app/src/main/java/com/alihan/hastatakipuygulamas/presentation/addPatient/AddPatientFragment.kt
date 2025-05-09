@@ -47,16 +47,6 @@ class AddPatientFragment : Fragment() {
         var dogum_tarihi=binding.dogumTarihi
         var email=binding.email
         var telefon=binding.telefon
-        var cinsiyet: String? =null
-
-        if(binding.erkekCheck.isChecked){
-            cinsiyet="Erkek"
-        }else if(binding.kadinCheck.isChecked){
-            cinsiyet="Kadın"
-        }else{
-            cinsiyet="Bilinmiyor"
-        }
-
         binding.erkekCheck.setOnClickListener {
             if(binding.kadinCheck.isChecked){
                 binding.kadinCheck.isChecked=false
@@ -67,7 +57,6 @@ class AddPatientFragment : Fragment() {
                 binding.erkekCheck.isChecked=false
             }
         }
-
         val fields = listOf(ad, soyad, tc_no, dogum_tarihi, email, telefon)
 
         fun checkFields() {
@@ -79,7 +68,6 @@ class AddPatientFragment : Fragment() {
                 checkFields()
             }
         }
-
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -92,7 +80,14 @@ class AddPatientFragment : Fragment() {
             val telefon=binding.telefon.text.toString()
             val adres=binding.adres.text.toString()
             val acilDurumKisi=binding.acilDurumKisi.text.toString()
-
+            var cinsiyet: String? =null
+            if(binding.erkekCheck.isChecked){
+                cinsiyet="Erkek"
+            }else if(binding.kadinCheck.isChecked){
+                cinsiyet="Kadın"
+            }else{
+                cinsiyet="Bilinmiyor"
+            }
             val yeniHasta = Hasta(
                 ad = ad,
                 soyad = soyad,

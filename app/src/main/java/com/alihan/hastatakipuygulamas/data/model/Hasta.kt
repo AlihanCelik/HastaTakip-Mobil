@@ -10,7 +10,7 @@ data class Hasta(
     val ad: String,
     val soyad: String,
     val tcKimlikNo: String,
-    val dogumTarihi: String="a",
+    val dogumTarihi: String="1990-05-05",
     val cinsiyet: String,
     val telefon: String,
     val email: String,
