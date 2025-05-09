@@ -13,6 +13,7 @@ import com.alihan.hastatakipuygulamas.data.model.Hasta
 import com.alihan.hastatakipuygulamas.databinding.FragmentDoktorInfoBinding
 import com.alihan.hastatakipuygulamas.databinding.FragmentDoktorListBinding
 import com.alihan.hastatakipuygulamas.databinding.FragmentPatientInfoBinding
+import com.alihan.hastatakipuygulamas.presentation.patientBilgi.PatientInfoFragmentArgs
 import com.alihan.hastatakipuygulamas.presentation.patientBilgi.PatientInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +39,7 @@ class DoktorInfoFragment : Fragment() {
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
         }
+        binding.doktor=doktor
         return binding.root
     }
 

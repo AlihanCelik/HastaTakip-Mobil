@@ -32,7 +32,7 @@ class DoktorAdapter : RecyclerView.Adapter<DoktorAdapter.DoktorViewHolder>() {
         holder.view.doktor = doktor
         holder.view.itemLy.setOnClickListener {
             val action = DoktorListFragmentDirections
-                .actionDoktorListFragmentToAddDoktorFragment(doktor)
+                .actionDoktorListFragmentToDoktorInfoFragment(doktor)
             findNavController(holder.itemView).navigate(action)
 
 
