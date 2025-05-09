@@ -1,4 +1,4 @@
-package com.alihan.hastatakipuygulamas.presentation.PatientInfo
+package com.alihan.hastatakipuygulamas.presentation.patientBilgi
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.data.model.Hasta
 import com.alihan.hastatakipuygulamas.databinding.FragmentPatientInfoBinding
-import com.alihan.hastatakipuygulamas.databinding.FragmentPatientListBinding
-import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -19,11 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class PatientInfoFragment : Fragment() {
     private var _binding: FragmentPatientInfoBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: PatientInfoViewModel by viewModels()
     private var hasta: Hasta? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -32,6 +29,7 @@ class PatientInfoFragment : Fragment() {
     ): View? {
         _binding = FragmentPatientInfoBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel=viewModel
 
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
@@ -47,6 +45,4 @@ class PatientInfoFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

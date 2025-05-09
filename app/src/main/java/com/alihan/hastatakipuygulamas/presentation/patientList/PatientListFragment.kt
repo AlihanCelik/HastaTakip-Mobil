@@ -31,7 +31,7 @@ class PatientListFragment : Fragment() {
     ): View? {
         _binding = FragmentPatientListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        binding.viewModel=viewModel
 
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
