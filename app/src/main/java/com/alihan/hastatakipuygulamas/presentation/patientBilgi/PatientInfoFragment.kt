@@ -46,6 +46,13 @@ class PatientInfoFragment : Fragment() {
         arguments.let {
             hasta=PatientInfoFragmentArgs.fromBundle(it!!).hasta
         }
+        parentFragmentManager.setFragmentResultListener("hasta_guncellendi", viewLifecycleOwner) { _, bundle ->
+            val guncellenmisHasta = bundle.getParcelable<Hasta>("hasta")
+            if (guncellenmisHasta != null) {
+                hasta = guncellenmisHasta
+                binding.hasta = hasta
+            }
+        }
         binding.hasta=hasta
         binding.delete.setOnClickListener {
             showDialog()

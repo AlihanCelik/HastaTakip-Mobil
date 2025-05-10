@@ -105,9 +105,9 @@ class AddPatientFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        // Kaydet butonuna tıklama işlemi
+        var yeniHasta: Hasta? = null
         binding.kaydetBtn.setOnClickListener {
-            val yeniHasta = Hasta(
+            yeniHasta = Hasta(
                 id = mevcutHasta?.id,
                 ad = binding.ad.text.toString(),
                 soyad = binding.soyad.text.toString(),
@@ -125,9 +125,9 @@ class AddPatientFragment : Fragment() {
             )
 
             if (mevcutHasta == null) {
-                viewModel.addPatient(yeniHasta)
+                viewModel.addPatient(yeniHasta!!)
             } else {
-                mevcutHasta?.id?.let { it1 -> viewModel.updatePatient(it1,yeniHasta) }
+                mevcutHasta?.id?.let { it1 -> viewModel.updatePatient(it1,yeniHasta!!) }
             }
         }
 
@@ -139,13 +139,22 @@ class AddPatientFragment : Fragment() {
                     binding.loadingProgressBar.visibility = View.VISIBLE
                 }
                 is PatientListState.Success -> {
-                    Snackbar.make(binding.root, "Hasta başarıyla eklendi", Snackbar.LENGTH_SHORT).show()
-                    setFragmentResult("hasta_eklendi", bundleOf("eklendi" to true))
+                    if (mevcutHasta==null){
+                        Snackbar.make(binding.root, "Hasta başarıyla eklendi", Snackbar.LENGTH_SHORT).show()
+                        setFragmentResult("hasta_eklendi", bundleOf("eklendi" to true))
+                    }else{
+                        Snackbar.make(binding.root, "Hasta başarıyla güncellendi", Snackbar.LENGTH_SHORT).show()
+                        setFragmentResult("hasta_guncellendi", bundleOf("hasta" to yeniHasta))
+                    }
                     findNavController().popBackStack()
                     binding.loadingProgressBar.visibility = View.GONE
                 }
                 is PatientListState.Error -> {
-                    Snackbar.make(binding.root, "Hasta oluşturulamadı", Snackbar.LENGTH_SHORT).show()
+                    if(mevcutHasta==null){
+                        Snackbar.make(binding.root, "Hasta oluşturulamadı.", Snackbar.LENGTH_SHORT).show()
+                    }else{
+                        Snackbar.make(binding.root, "Hasta güncellenemedi.", Snackbar.LENGTH_SHORT).show()
+                    }
                     binding.kaydetBtn.isEnabled = true
                     binding.loadingProgressBar.visibility = View.GONE
                 }
