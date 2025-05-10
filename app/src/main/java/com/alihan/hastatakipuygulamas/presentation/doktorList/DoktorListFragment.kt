@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,6 +53,23 @@ class DoktorListFragment : Fragment() {
         binding.doktorEkleBtn.setOnClickListener{
             findNavController().navigate(R.id.action_doktorListFragment_to_addDoktorFragment)
         }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    val filteredList = viewModel.filterDoctors(it)
+                    adapter.setData(filteredList)}
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    val filteredList = viewModel.filterDoctors(newText ?: "")
+                    adapter.setData(filteredList)
+                }
+                return true
+            }
+        })
 
         viewModel!!.state.observe(viewLifecycleOwner) { state ->
             when (state) {

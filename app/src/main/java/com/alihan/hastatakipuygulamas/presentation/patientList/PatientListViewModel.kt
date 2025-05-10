@@ -16,7 +16,6 @@ class PatientListViewModel @Inject
     constructor( private val getAllPatientsUseCase: GetAllPatientsUseCase) : ViewModel() {
     private val _state = MutableLiveData<PatientListState>()
     val state: LiveData<PatientListState> = _state
-    private var allPatients: List<Hasta> = emptyList()
 
     fun fetchPatients() {
         _state.value = PatientListState.Loading
