@@ -87,14 +87,18 @@
     <fragment
         android:id="@+id/addPatientFragment"
         android:name="com.alihan.hastatakipuygulamas.presentation.addPatient.AddPatientFragment"
-        android:label="AddPatientFragment" />
+        android:label="AddPatientFragment">
+        <argument
+            android:name="hasta"
+            app:argType="com.alihan.hastatakipuygulamas.data.model.Hasta"/>
+    </fragment>
     <fragment
         android:id="@+id/addDoktorFragment"
         android:name="com.alihan.hastatakipuygulamas.presentation.addDoktor.AddDoktorFragment"
         android:label="AddDoktorFragment" >
         <argument
             android:name="doktor"
-            app:argType="com.alihan.hastatakipuygulamas.data.model.Doktor" />
+            app:argType="com.alihan.hastatakipuygulamas.data.model.Doktor"/>
     </fragment>
     <fragment
         android:id="@+id/doktorInfoFragment"

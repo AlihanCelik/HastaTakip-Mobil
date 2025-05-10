@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.data.model.Hasta
 import com.alihan.hastatakipuygulamas.databinding.FragmentPatientInfoBinding
+import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListFragmentDirections
 import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListState
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
@@ -47,6 +49,11 @@ class PatientInfoFragment : Fragment() {
         binding.hasta=hasta
         binding.delete.setOnClickListener {
             showDialog()
+        }
+        binding.dZenle.setOnClickListener {
+            val action = PatientInfoFragmentDirections
+                .actionPatientInfoFragmentToAddPatientFragment(hasta!!)
+            findNavController().navigate(action)
         }
 
 

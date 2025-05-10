@@ -26,11 +26,13 @@ class AddPatientFragment : Fragment() {
     private var _binding: FragmentAddPatientBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AddPatientViewModel by viewModels()
-
+    private var mevcutHasta: Hasta? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        arguments?.let {
+            mevcutHasta = it.getParcelable("hasta") // Hasta sınıfı Parcelable olmalı
+        }
     }
 
     override fun onCreateView(
@@ -41,67 +43,95 @@ class AddPatientFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        var ad=binding.ad
-        var soyad=binding.soyad
-        var tc_no=binding.tcNo
-        var dogum_tarihi=binding.dogumTarihi
-        var email=binding.email
-        var telefon=binding.telefon
+        if(mevcutHasta==null){
+            var ad = binding.ad
+            var soyad = binding.soyad
+            var tc_no = binding.tcNo
+            var dogum_tarihi = binding.dogumTarihi
+            var email = binding.email
+            var telefon = binding.telefon
+            val fields = listOf(ad, soyad, tc_no, dogum_tarihi, email, telefon)
+
+            fun checkFields() {
+                binding.kaydetBtn.isEnabled = fields.all { it.text.toString().isNotBlank() } || mevcutHasta != null
+            }
+
+            fields.forEach { editText ->
+                editText.addTextChangedListener {
+                    checkFields()
+                }
+            }
+        }else{
+            binding.kaydetBtn.isEnabled=true
+        }
+
+
         binding.erkekCheck.setOnClickListener {
-            if(binding.kadinCheck.isChecked){
-                binding.kadinCheck.isChecked=false
+            if (binding.kadinCheck.isChecked) {
+                binding.kadinCheck.isChecked = false
             }
         }
         binding.kadinCheck.setOnClickListener {
-            if(binding.erkekCheck.isChecked){
-                binding.erkekCheck.isChecked=false
+            if (binding.erkekCheck.isChecked) {
+                binding.erkekCheck.isChecked = false
             }
         }
-        val fields = listOf(ad, soyad, tc_no, dogum_tarihi, email, telefon)
 
-        fun checkFields() {
-            binding.kaydetBtn.isEnabled = fields.all { it.text.toString().isNotBlank() }
-        }
+        // Eğer mevcutHasta varsa, alanları doldur
+        mevcutHasta?.let { hasta ->
+            binding.ad.setText(hasta.ad)
+            binding.soyad.setText(hasta.soyad)
+            binding.tcNo.setText(hasta.tcKimlikNo)
+            binding.dogumTarihi.setText(hasta.dogumTarihi)
+            binding.email.setText(hasta.email)
+            binding.telefon.setText(hasta.telefon)
+            binding.adres.setText(hasta.adres)
+            binding.acilDurumKisi.setText(hasta.acilDurumKisi)
 
-        fields.forEach { editText ->
-            editText.addTextChangedListener {
-                checkFields()
+            when (hasta.cinsiyet) {
+                "Erkek" -> binding.erkekCheck.isChecked = true
+                "Kadın" -> binding.kadinCheck.isChecked = true
+                else -> {
+                    binding.erkekCheck.isChecked = false
+                    binding.kadinCheck.isChecked = false
+                }
             }
+            binding.kaydetBtn.text = "Güncelle"
         }
+
+
+
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        // Kaydet butonuna tıklama işlemi
         binding.kaydetBtn.setOnClickListener {
-            val ad = binding.ad.text.toString()
-            val soyad = binding.soyad.text.toString()
-            val tc = binding.tcNo.text.toString()
-            val dogumTarihi = binding.dogumTarihi.text.toString()
-            val email=binding.email.text.toString()
-            val telefon=binding.telefon.text.toString()
-            val adres=binding.adres.text.toString()
-            val acilDurumKisi=binding.acilDurumKisi.text.toString()
-            var cinsiyet: String? =null
-            if(binding.erkekCheck.isChecked){
-                cinsiyet="Erkek"
-            }else if(binding.kadinCheck.isChecked){
-                cinsiyet="Kadın"
-            }else{
-                cinsiyet="Bilinmiyor"
-            }
             val yeniHasta = Hasta(
-                ad = ad,
-                soyad = soyad,
-                tcKimlikNo = tc,
-                cinsiyet = cinsiyet,
-                dogumTarihi = dogumTarihi,
-                email = email,
-                telefon = telefon,
-                adres = adres,
-                acilDurumKisi = acilDurumKisi
+                id = mevcutHasta?.id,
+                ad = binding.ad.text.toString(),
+                soyad = binding.soyad.text.toString(),
+                tcKimlikNo = binding.tcNo.text.toString(),
+                cinsiyet = when {
+                    binding.erkekCheck.isChecked -> "Erkek"
+                    binding.kadinCheck.isChecked -> "Kadın"
+                    else -> "Bilinmiyor"
+                },
+                dogumTarihi = binding.dogumTarihi.text.toString(),
+                email = binding.email.text.toString(),
+                telefon = binding.telefon.text.toString(),
+                adres = binding.adres.text.toString(),
+                acilDurumKisi = binding.acilDurumKisi.text.toString()
             )
-            viewModel.addPatient(yeniHasta)
+
+            if (mevcutHasta == null) {
+                viewModel.addPatient(yeniHasta)
+            } else {
+                mevcutHasta?.id?.let { it1 -> viewModel.updatePatient(it1,yeniHasta) }
+            }
         }
 
+        // ViewModel state gözlemi
         viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is PatientListState.Loading -> {
@@ -123,5 +153,4 @@ class AddPatientFragment : Fragment() {
         }
         return binding.root
     }
-
 }

@@ -33,4 +33,16 @@ class AddPatientViewModel @Inject constructor(
         }
     }
 
+    fun updatePatient(id:Long,hasta: Hasta) {
+        viewModelScope.launch {
+            _state.value = PatientListState.Loading
+            try {
+                getUpdatePatientUseCase(id,hasta)
+                _state.value = PatientListState.Success(listOf(hasta))
+            } catch (e: Exception) {
+                _state.value = PatientListState.Error(e.localizedMessage ?: "Hata")
+            }
+        }
+    }
+
 }

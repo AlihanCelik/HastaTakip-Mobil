@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.data.model.Doktor
@@ -15,6 +16,7 @@ import com.alihan.hastatakipuygulamas.databinding.FragmentDoktorListBinding
 import com.alihan.hastatakipuygulamas.databinding.FragmentPatientInfoBinding
 import com.alihan.hastatakipuygulamas.presentation.patientBilgi.PatientInfoFragmentArgs
 import com.alihan.hastatakipuygulamas.presentation.patientBilgi.PatientInfoViewModel
+import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,6 +45,7 @@ class DoktorInfoFragment : Fragment() {
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
         }
+
         binding.doktor=doktor
         return binding.root
     }
