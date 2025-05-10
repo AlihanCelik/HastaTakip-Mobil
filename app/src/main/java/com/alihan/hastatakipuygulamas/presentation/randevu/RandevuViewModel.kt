@@ -18,6 +18,8 @@ class RandevuViewModel @Inject constructor(
     private val _state = MutableLiveData<DoktorListState>()
     val state: LiveData<DoktorListState> = _state
 
+
+
     fun fetchDoctors() {
         _state.value = DoktorListState.Loading
 
