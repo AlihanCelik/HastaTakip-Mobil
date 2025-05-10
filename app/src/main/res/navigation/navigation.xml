@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/randevuFragment"
-        android:name="com.alihan.hastatakipuygulamas.presentation.RandevuFragment"
+        android:name="com.alihan.hastatakipuygulamas.presentation.randevu.RandevuFragment"
         android:label="fragment_randevu"
         tools:layout="@layout/fragment_randevu" />
     <fragment
