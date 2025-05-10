@@ -1,5 +1,6 @@
 package com.alihan.hastatakipuygulamas.presentation.patientBilgi
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,9 +20,12 @@ class PatientInfoViewModel @Inject constructor(private val deletePatientUseCase:
         _state.value = PatientDeleteState.Loading
         viewModelScope.launch {
             try {
+                Log.d("PatientInfoVM", "Silme denendi")
                 deletePatientUseCase(id)
-                _state.value=PatientDeleteState.Success(true)
+                Log.d("PatientInfoVM", "Silme başarılı")
+                _state.value = PatientDeleteState.Success(true)
             } catch (e: Exception) {
+                Log.e("PatientInfoVM", "Silme hatası: ${e.message}")
                 _state.value = PatientDeleteState.Error("Hasta Silinemedi")
             }
         }

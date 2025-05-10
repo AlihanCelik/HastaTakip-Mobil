@@ -3,6 +3,8 @@ package com.alihan.hastatakipuygulamas.data.repository
 import com.alihan.hastatakipuygulamas.data.model.Hasta
 import com.alihan.hastatakipuygulamas.data.remote.HastaApi
 import com.alihan.hastatakipuygulamas.domain.repository.HastaRepository
+import okhttp3.ResponseBody
+import retrofit2.Response
 import javax.inject.Inject
 
 class HastaRepositoryImpl @Inject constructor( private val hastaApi: HastaApi) : HastaRepository {
@@ -22,7 +24,7 @@ class HastaRepositoryImpl @Inject constructor( private val hastaApi: HastaApi) :
         return hastaApi.getPatientById(id)
     }
 
-    override suspend fun deletePatient(id: Long) {
+    override suspend fun deletePatient(id: Long): Response<ResponseBody> {
         return hastaApi.deletePatient(id)
     }
 

@@ -1,6 +1,8 @@
 package com.alihan.hastatakipuygulamas.data.remote
 
 import com.alihan.hastatakipuygulamas.data.model.Hasta
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -23,5 +25,5 @@ interface HastaApi {
     suspend fun updatePatient(@Path("id") id: Long, @Body hasta: Hasta): Hasta
 
     @DELETE("api/hasta/sil/{id}")
-    suspend fun deletePatient(@Path("id") id: Long)
+    suspend fun deletePatient(@Path("id") id: Long): Response<ResponseBody>
 }

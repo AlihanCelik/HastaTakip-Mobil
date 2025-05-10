@@ -46,7 +46,7 @@ class PatientInfoFragment : Fragment() {
         }
         binding.hasta=hasta
         binding.delete.setOnClickListener {
-            viewModel.deletePatients(hasta?.id!!)
+            showDialog()
         }
 
 
@@ -72,7 +72,31 @@ class PatientInfoFragment : Fragment() {
         _binding = null
     }
 
-    fun showDialog(){
+    private fun showDialog() {
+        val dialogView = View.inflate(context, R.layout.delete_dialog, null)
 
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val cancelButton = dialogView.findViewById<MaterialButton>(R.id.no_trashdelete_permi)
+        val deleteButton = dialogView.findViewById<MaterialButton>(R.id.evet_btn)
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        deleteButton.setOnClickListener {
+            hasta?.id?.let { id ->
+                viewModel.deletePatients(id)
+            }
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
+
 }
