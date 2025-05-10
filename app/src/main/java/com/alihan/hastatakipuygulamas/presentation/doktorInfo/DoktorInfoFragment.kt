@@ -38,7 +38,6 @@ class DoktorInfoFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +56,6 @@ class DoktorInfoFragment : Fragment() {
                 binding.doktor = doktor
             }
         }
-
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -90,8 +88,6 @@ class DoktorInfoFragment : Fragment() {
 
     private fun showDialog() {
         val dialogView = View.inflate(context, R.layout.delete_dialog, null)
-
-
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .setCancelable(false)

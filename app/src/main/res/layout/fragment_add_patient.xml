@@ -216,7 +216,7 @@
                             android:layout_height="wrap_content"
 
                             android:paddingLeft="3dp"
-                            android:text="Karı/Bayan"
+                            android:text="Kadın"
                             android:textStyle="bold">
                         </TextView>
                         <CheckBox
