@@ -33,8 +33,8 @@ class PatientListViewModel @Inject
         val currentState = _state.value
         return if (currentState is PatientListState.Success) {
             currentState.patients.filter { hasta ->
-                hasta.ad.contains(query, ignoreCase = true) ||
-                        hasta.soyad.contains(query, ignoreCase = true) ||
+                val fullName = "${hasta.ad} ${hasta.soyad}"
+                fullName.contains(query, ignoreCase = true) ||
                         hasta.tcKimlikNo.contains(query, ignoreCase = true)
             }
         } else {

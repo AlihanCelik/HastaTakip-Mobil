@@ -33,8 +33,8 @@ class DoktorListViewModel @Inject constructor(private val getDoktorUseCase: GetA
         val currentState = _state.value
         return if (currentState is DoktorListState.Success) {
             currentState.patients.filter { doktor ->
-                doktor.ad!!.contains(query, ignoreCase = true) ||
-                        doktor.soyad!!.contains(query, ignoreCase = true) ||
+                val fullName = "${doktor.ad} ${doktor.soyad}" // Ad ve Soyad'ı birleştiriyoruz
+                fullName.contains(query, ignoreCase = true) ||
                         doktor.branş!!.contains(query, ignoreCase = true)
             }
         } else {
