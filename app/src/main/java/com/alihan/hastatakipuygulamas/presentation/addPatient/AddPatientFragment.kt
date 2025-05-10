@@ -31,7 +31,7 @@ class AddPatientFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            mevcutHasta = it.getParcelable("hasta") // Hasta sınıfı Parcelable olmalı
+            mevcutHasta = it.getParcelable("hasta")
         }
     }
 
@@ -77,7 +77,6 @@ class AddPatientFragment : Fragment() {
             }
         }
 
-        // Eğer mevcutHasta varsa, alanları doldur
         mevcutHasta?.let { hasta ->
             binding.ad.setText(hasta.ad)
             binding.soyad.setText(hasta.soyad)

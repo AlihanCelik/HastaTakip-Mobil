@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -74,9 +75,26 @@ class PatientListFragment : Fragment() {
         parentFragmentManager.setFragmentResultListener("hasta_eklendi", viewLifecycleOwner) { _, result ->
             val eklendi = result.getBoolean("eklendi", false)
             if (eklendi) {
-                viewModel.fetchPatients() // Listeyi güncelle
+                viewModel.fetchPatients()
             }
         }
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    val filteredList = viewModel.filterPatients(it)
+                    adapter.setData(filteredList)}
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    val filteredList = viewModel.filterPatients(newText ?: "")
+                    adapter.setData(filteredList)
+                }
+                return true
+            }
+        })
+
 
 
         viewModel.fetchPatients()

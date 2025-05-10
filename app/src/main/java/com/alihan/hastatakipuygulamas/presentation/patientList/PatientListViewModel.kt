@@ -16,6 +16,7 @@ class PatientListViewModel @Inject
     constructor( private val getAllPatientsUseCase: GetAllPatientsUseCase) : ViewModel() {
     private val _state = MutableLiveData<PatientListState>()
     val state: LiveData<PatientListState> = _state
+    private var allPatients: List<Hasta> = emptyList()
 
     fun fetchPatients() {
         _state.value = PatientListState.Loading
@@ -29,6 +30,19 @@ class PatientListViewModel @Inject
             }
         }
     }
+    fun filterPatients(query: String): List<Hasta> {
+        val currentState = _state.value
+        return if (currentState is PatientListState.Success) {
+            currentState.patients.filter { hasta ->
+                hasta.ad.contains(query, ignoreCase = true) ||
+                        hasta.soyad.contains(query, ignoreCase = true) ||
+                        hasta.tcKimlikNo.contains(query, ignoreCase = true)
+            }
+        } else {
+            emptyList()
+        }
+    }
+
 
 
 }
