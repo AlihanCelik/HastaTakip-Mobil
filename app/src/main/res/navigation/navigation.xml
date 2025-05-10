@@ -99,6 +99,10 @@
     <fragment
         android:id="@+id/doktorInfoFragment"
         android:name="com.alihan.hastatakipuygulamas.presentation.doktorInfo.DoktorInfoFragment"
-        android:label="DoktorInfoFragment" />
+        android:label="DoktorInfoFragment" >
+        <argument
+            android:name="doktor"
+            app:argType="com.alihan.hastatakipuygulamas.data.model.Doktor" />
+    </fragment>
 
 </navigation>

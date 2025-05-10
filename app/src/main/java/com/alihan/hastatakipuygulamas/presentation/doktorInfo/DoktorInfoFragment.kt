@@ -36,6 +36,10 @@ class DoktorInfoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel=viewModel
 
+        arguments.let {
+            doktor=DoktorInfoFragmentArgs.fromBundle(it!!).doktor
+        }
+
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
         }

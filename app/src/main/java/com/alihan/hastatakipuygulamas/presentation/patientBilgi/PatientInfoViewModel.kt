@@ -20,7 +20,6 @@ class PatientInfoViewModel @Inject constructor(private val deletePatientUseCase:
         viewModelScope.launch {
             try {
                 deletePatientUseCase(id)
-                println("aaaaaaaaa")
                 _state.value=PatientDeleteState.Success(true)
             } catch (e: Exception) {
                 _state.value = PatientDeleteState.Error("Hasta Silinemedi")
