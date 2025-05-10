@@ -181,7 +181,7 @@
                             android:layout_marginLeft="10dp"
                             android:text="Kaydet"
                             android:enabled="false"
-                            android:backgroundTint="@color/red2"
+                            android:backgroundTint="@color/red"
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             app:cornerRadius="10dp" >

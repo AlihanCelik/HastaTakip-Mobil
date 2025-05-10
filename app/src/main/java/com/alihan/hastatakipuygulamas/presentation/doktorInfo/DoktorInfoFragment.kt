@@ -50,6 +50,13 @@ class DoktorInfoFragment : Fragment() {
         arguments.let {
             doktor=DoktorInfoFragmentArgs.fromBundle(it!!).doktor
         }
+        parentFragmentManager.setFragmentResultListener("doktor_guncellendi", viewLifecycleOwner) { _, bundle ->
+            val guncellenmisDoktor= bundle.getParcelable<Doktor>("doktor")
+            if (guncellenmisDoktor != null) {
+                doktor = guncellenmisDoktor
+                binding.doktor = doktor
+            }
+        }
 
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()

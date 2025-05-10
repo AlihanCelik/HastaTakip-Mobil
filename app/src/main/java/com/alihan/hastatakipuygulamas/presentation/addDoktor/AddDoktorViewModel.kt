@@ -20,7 +20,8 @@ class AddDoktorViewModel @Inject constructor(private val addDoktorUseCase: AddDo
     private val _state = MutableLiveData<DoktorListState>()
     val state: LiveData<DoktorListState> = _state
 
-    fun addPatient(doktor: Doktor) {
+
+    fun addDoktor(doktor: Doktor) {
         _state.value = DoktorListState.Loading
         viewModelScope.launch {
             try {
@@ -32,7 +33,7 @@ class AddDoktorViewModel @Inject constructor(private val addDoktorUseCase: AddDo
         }
     }
 
-    fun updatePatient(id:Long,doktor: Doktor) {
+    fun updateDoktor(id:Long,doktor: Doktor) {
         viewModelScope.launch {
             _state.value = DoktorListState.Loading
             try {
