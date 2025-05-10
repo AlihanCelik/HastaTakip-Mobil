@@ -1,6 +1,8 @@
 package com.alihan.hastatakipuygulamas.data.remote
 
 import com.alihan.hastatakipuygulamas.data.model.Doktor
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -26,6 +28,6 @@ interface DoktorApi {
     suspend fun updateDoktor(@Path("id") id: Long, @Body doktor: Doktor): Doktor
 
     @DELETE("api/doktor/sil/{id}")
-    suspend fun deleteDoktor(@Path("id") id: Long)
+    suspend fun deleteDoktor(@Path("id") id: Long): Response<ResponseBody>
 
 }

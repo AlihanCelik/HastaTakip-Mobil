@@ -3,6 +3,8 @@ package com.alihan.hastatakipuygulamas.data.repository
 import com.alihan.hastatakipuygulamas.data.model.Doktor
 import com.alihan.hastatakipuygulamas.data.remote.DoktorApi
 import com.alihan.hastatakipuygulamas.domain.repository.DoktorRepository
+import okhttp3.ResponseBody
+import retrofit2.Response
 import javax.inject.Inject
 
 class DoktorRepositoryImpl @Inject constructor( private val doktorApi: DoktorApi) : DoktorRepository{
@@ -27,7 +29,7 @@ class DoktorRepositoryImpl @Inject constructor( private val doktorApi: DoktorApi
         return doktorApi.updateDoktor(id,doktor)
     }
 
-    override suspend fun deleteDoktor(id: Long) {
+    override suspend fun deleteDoktor(id: Long): Response<ResponseBody> {
         return doktorApi.deleteDoktor(id)
     }
 
