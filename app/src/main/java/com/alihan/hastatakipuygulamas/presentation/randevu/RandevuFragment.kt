@@ -13,12 +13,17 @@ import android.widget.ArrayAdapter
 import android.widget.SpinnerAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.data.model.Doktor
+import com.alihan.hastatakipuygulamas.data.model.DoktorRef
 import com.alihan.hastatakipuygulamas.data.model.Hasta
+import com.alihan.hastatakipuygulamas.data.model.HastaRef
 import com.alihan.hastatakipuygulamas.data.model.Randevu
 import com.alihan.hastatakipuygulamas.databinding.FragmentPatientListBinding
 import com.alihan.hastatakipuygulamas.databinding.FragmentRandevuBinding
@@ -26,7 +31,10 @@ import com.alihan.hastatakipuygulamas.presentation.Adapter.DoktorAdapter
 import com.alihan.hastatakipuygulamas.presentation.Adapter.PatientAdapter
 import com.alihan.hastatakipuygulamas.presentation.Adapter.SpinnerDoktorAdapter
 import com.alihan.hastatakipuygulamas.presentation.doktorList.DoktorListState
+import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListState
 import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListViewModel
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -40,13 +48,13 @@ class RandevuFragment : Fragment() {
     private var isDoctorListLoaded = false
     private var selectedDate: String = ""
     private var selectedTime: String = ""
+    private var selectedDoktor: Doktor? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +63,24 @@ class RandevuFragment : Fragment() {
         _binding = FragmentRandevuBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel=viewModel
+
+        var ad = binding.hastaAd
+        var soyad = binding.hastaSoyad
+        var tc = binding.hastaTc
+        var randevusaati = binding.randevuSaati
+        var randevutarihi = binding.randevuTarihi
+
+        val fields = listOf(ad, soyad, tc, randevusaati, randevutarihi)
+
+        fun checkFields() {
+            binding.kaydetBtn.isEnabled = fields.all { it.text.toString().isNotBlank() }
+        }
+
+        fields.forEach { editText ->
+            editText.addTextChangedListener {
+                checkFields()
+            }
+        }
 
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
@@ -74,12 +100,13 @@ class RandevuFragment : Fragment() {
             datePicker.show()
         }
 
+
         binding.randevuSaati.setOnClickListener {
             val calendar = Calendar.getInstance()
             val timePicker = TimePickerDialog(
                 requireContext(),
                 { _, hourOfDay, minute ->
-                    val selectedTime = String.format("%02d:%02d", hourOfDay, minute)
+                    selectedTime = String.format("%02d:%02d", hourOfDay, minute) // BURADA atama
                     binding.randevuSaati.setText(selectedTime)
                 },
                 calendar.get(Calendar.HOUR_OF_DAY),
@@ -116,23 +143,73 @@ class RandevuFragment : Fragment() {
                 }
             }
         })
+        binding.doktorSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                selectedDoktor = parent?.getItemAtPosition(position) as? Doktor
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        viewModel.state2.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is RandevuState.Loading -> {
+                    binding.kaydetBtn.isEnabled = false
+                    binding.loadingProgressBar.visibility = View.VISIBLE
+                }
+                is RandevuState.Success -> {
+
+                        Snackbar.make(binding.root, "Hasta başarıyla eklendi", Snackbar.LENGTH_SHORT).show()
+                        setFragmentResult("hasta_eklendi", bundleOf("eklendi" to true))
+                    findNavController().popBackStack()
+                    binding.loadingProgressBar.visibility = View.GONE
+                }
+                is RandevuState.Error -> {
+                        Snackbar.make(binding.root, "Hasta oluşturulamadı.", Snackbar.LENGTH_SHORT).show()
+                    binding.kaydetBtn.isEnabled = true
+                    binding.loadingProgressBar.visibility = View.GONE
+                }
+            }
+        }
+
         binding.kaydetBtn.setOnClickListener{
-            val selectedDoktor = binding.doktorSpinner.selectedItem as Doktor // Doktor seçimini al
             val selectedDurum = binding.randevuDurumuSpinner.selectedItem.toString()
             val dateTimeStr = "$selectedDate $selectedTime"
             val formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm")
-            val localDateTime = LocalDateTime.parse(dateTimeStr, formatter)
+            val localDateTime = LocalDateTime.parse(dateTimeStr.trim(), formatter)
 
-            var yeniRandevu=Randevu(
-                hasta = Hasta(
-                    ad = binding.hastaAd.text.toString(),
-                    soyad = binding.hastaSoyad.text.toString(),
-                    tcKimlikNo = binding.hastaTc.text.toString()
+            val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+            val formattedDate = localDateTime.format(dateFormatter)
+
+            println("saat tarih $localDateTime")
+            println(selectedDoktor!!.ad)
+            println(selectedDoktor!!.soyad)
+            println(selectedDoktor!!.id)
+            println(selectedDoktor!!.branş)
+            println(selectedDurum)
+
+
+
+            var yeniRandevu = Randevu(
+                hasta = HastaRef(
+                    tcKimlikNo = binding.hastaTc.text.toString().trim(),
+                    ad = binding.hastaAd.text.toString().trim(),
+                    soyad = binding.hastaSoyad.text.toString().trim()
                 ),
-                doktor = selectedDoktor,
+                doktor = DoktorRef(
+                    id = selectedDoktor?.id!!
+                ),
                 durum = selectedDurum,
-                randevuTarihi =localDateTime
+                randevuTarihi = formattedDate // Formatted date'i gönderiyoruz
             )
+
+            // Gson ile JSON formatına dönüştürüp logluyoruz
+            val gson = Gson()
+            val jsonVerisi = gson.toJson(yeniRandevu)
+            println("Gönderilen JSON: $jsonVerisi")
+
+            viewModel.addRandevu(yeniRandevu)
         }
 
         binding.doktorSpinner.setOnTouchListener { _, _ ->

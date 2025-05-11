@@ -1,5 +1,6 @@
 package com.alihan.hastatakipuygulamas.presentation.randevu
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,6 +46,7 @@ class RandevuViewModel @Inject constructor(
                 addRandevuUseCase(randevu)
                 _state2.value = RandevuState.Success(listOf(randevu))
             } catch (e: Exception) {
+                Log.e("RandevuInfoVM", "olusturma hatası: ${e.message}")
                 _state2.value = RandevuState.Error("Randevu eklenirken hata oluştu.($e)")
             }
         }
