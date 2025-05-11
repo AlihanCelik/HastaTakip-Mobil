@@ -192,14 +192,12 @@ class RandevuFragment : Fragment() {
 
 
             var yeniRandevu = Randevu(
-                hasta = HastaRef(
+                hasta = Hasta(
                     tcKimlikNo = binding.hastaTc.text.toString().trim(),
                     ad = binding.hastaAd.text.toString().trim(),
                     soyad = binding.hastaSoyad.text.toString().trim()
                 ),
-                doktor = DoktorRef(
-                    id = selectedDoktor?.id!!
-                ),
+                doktor =  selectedDoktor!!,
                 durum = selectedDurum,
                 randevuTarihi = formattedDate // Formatted date'i gönderiyoruz
             )

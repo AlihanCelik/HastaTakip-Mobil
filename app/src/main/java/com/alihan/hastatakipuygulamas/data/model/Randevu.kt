@@ -7,8 +7,8 @@ import java.time.LocalDateTime
 @Parcelize
 data class Randevu(
     private val id:Long?=null,
-    val hasta: HastaRef,
-    val doktor: DoktorRef,
+    val hasta: Hasta,
+    val doktor: Doktor,
     val randevuTarihi:String,
     val durum :String
 
