@@ -13,7 +13,7 @@ interface RandevuApi {
     suspend fun getAllRandevu(): List<Randevu>
 
     @GET("api/randevu/hasta/{hastaId}")
-    suspend fun getRandevuByHastaId(@Path("hastaId") hastaId: Long): List<Randevu>
+    suspend fun getRandevuByHastaId(@Path("hastaId") hastaId: String): List<Randevu>
 
     @POST("api/randevu/ekle")
     suspend fun addRandevu(@Body randevu: Randevu): Randevu

@@ -4,5 +4,5 @@ import com.alihan.hastatakipuygulamas.domain.repository.RandevuRepository
 import javax.inject.Inject
 
 class GetRandevuByHastaIdUseCase @Inject constructor(private var randevuRepository: RandevuRepository) {
-    suspend operator fun invoke(hastaId: Long) = randevuRepository.getRandevuByHastaId(hastaId)
+    suspend operator fun invoke(hastaId: String) = randevuRepository.getRandevuByHastaId(hastaId)
 }

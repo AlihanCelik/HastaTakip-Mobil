@@ -10,7 +10,7 @@ class RandevuRepositoryImpl @Inject constructor(private val randevuApi: RandevuA
         return randevuApi.getAllRandevu()
     }
 
-    override suspend fun getRandevuByHastaId(hastaId: Long): List<Randevu> {
+    override suspend fun getRandevuByHastaId(hastaId: String): List<Randevu> {
         return randevuApi.getRandevuByHastaId(hastaId)
     }
 
