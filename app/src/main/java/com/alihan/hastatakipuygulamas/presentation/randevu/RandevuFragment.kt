@@ -2,6 +2,7 @@ package com.alihan.hastatakipuygulamas.presentation.randevu
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,10 +12,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SpinnerAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.alihan.hastatakipuygulamas.R
+import com.alihan.hastatakipuygulamas.data.model.Doktor
+import com.alihan.hastatakipuygulamas.data.model.Hasta
+import com.alihan.hastatakipuygulamas.data.model.Randevu
 import com.alihan.hastatakipuygulamas.databinding.FragmentPatientListBinding
 import com.alihan.hastatakipuygulamas.databinding.FragmentRandevuBinding
 import com.alihan.hastatakipuygulamas.presentation.Adapter.DoktorAdapter
@@ -23,6 +28,8 @@ import com.alihan.hastatakipuygulamas.presentation.Adapter.SpinnerDoktorAdapter
 import com.alihan.hastatakipuygulamas.presentation.doktorList.DoktorListState
 import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 @AndroidEntryPoint
@@ -31,6 +38,8 @@ class RandevuFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: RandevuViewModel by viewModels()
     private var isDoctorListLoaded = false
+    private var selectedDate: String = ""
+    private var selectedTime: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +47,7 @@ class RandevuFragment : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +64,7 @@ class RandevuFragment : Fragment() {
             val datePicker = DatePickerDialog(
                 requireContext(),
                 { _, year, month, dayOfMonth ->
-                    val selectedDate = "$dayOfMonth/${month + 1}/$year"
+                    selectedDate = "$dayOfMonth/${month + 1}/$year"
                     binding.randevuTarihi.setText(selectedDate)
                 },
                 calendar.get(Calendar.YEAR),
@@ -106,6 +116,24 @@ class RandevuFragment : Fragment() {
                 }
             }
         })
+        binding.kaydetBtn.setOnClickListener{
+            val selectedDoktor = binding.doktorSpinner.selectedItem as Doktor // Doktor seçimini al
+            val selectedDurum = binding.randevuDurumuSpinner.selectedItem.toString()
+            val dateTimeStr = "$selectedDate $selectedTime"
+            val formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm")
+            val localDateTime = LocalDateTime.parse(dateTimeStr, formatter)
+
+            var yeniRandevu=Randevu(
+                hasta = Hasta(
+                    ad = binding.hastaAd.text.toString(),
+                    soyad = binding.hastaSoyad.text.toString(),
+                    tcKimlikNo = binding.hastaTc.text.toString()
+                ),
+                doktor = selectedDoktor,
+                durum = selectedDurum,
+                randevuTarihi =localDateTime
+            )
+        }
 
         binding.doktorSpinner.setOnTouchListener { _, _ ->
             if (!isDoctorListLoaded) {
