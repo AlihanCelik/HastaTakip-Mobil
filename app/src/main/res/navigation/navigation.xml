@@ -83,6 +83,13 @@
         <action
             android:id="@+id/action_patientInfoFragment_to_addPatientFragment"
             app:destination="@id/addPatientFragment" />
+        <action
+            android:id="@+id/action_patientInfoFragment_to_randevuListFragment"
+            app:destination="@id/randevuListFragment">
+            <argument
+                android:name="hasta"
+                app:argType="com.alihan.hastatakipuygulamas.data.model.Hasta"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/addPatientFragment"
@@ -114,6 +121,14 @@
                 android:name="doktor"
                 app:argType="com.alihan.hastatakipuygulamas.data.model.Doktor"/>
         </action>
+    </fragment>
+    <fragment
+        android:id="@+id/randevuListFragment"
+        android:name="com.alihan.hastatakipuygulamas.presentation.randevuList.RandevuListFragment"
+        android:label="RandevuListFragment" >
+        <argument
+            android:name="hasta"
+            app:argType="com.alihan.hastatakipuygulamas.data.model.Hasta"/>
     </fragment>
 
 </navigation>
