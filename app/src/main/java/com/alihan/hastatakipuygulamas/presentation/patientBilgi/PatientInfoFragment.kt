@@ -53,6 +53,11 @@ class PatientInfoFragment : Fragment() {
                 binding.hasta = hasta
             }
         }
+        binding.hastaRandevuBtn.setOnClickListener {
+            val action = PatientInfoFragmentDirections
+                .actionPatientInfoFragmentToRandevuListFragment(hasta!!)
+            findNavController().navigate(action)
+        }
         binding.hasta=hasta
         binding.delete.setOnClickListener {
             showDialog()
