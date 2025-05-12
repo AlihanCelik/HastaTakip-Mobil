@@ -169,6 +169,11 @@ class RandevuFragment : Fragment() {
             override fun onNothingSelected(parentView: AdapterView<*>?) {
             }
         }
+        val durumIndex = durumlar.indexOf(randevu?.durum)
+        if (durumIndex != -1) {
+            binding.randevuDurumuSpinner.setSelection(durumIndex)
+        }
+
 
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
@@ -178,6 +183,11 @@ class RandevuFragment : Fragment() {
                     val doktorlar = state.patients
                     val doktorAdapter = SpinnerDoktorAdapter(requireContext(), doktorlar)
                     binding.doktorSpinner.adapter = doktorAdapter
+                    val mevcutDoktor = randevu?.doktor
+                    val doktorIndex = doktorlar.indexOfFirst { it.id == mevcutDoktor?.id }
+                    if (doktorIndex != -1) {
+                        binding.doktorSpinner.setSelection(doktorIndex)
+                    }
                 }
                 is DoktorListState.Error -> {
                     Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
