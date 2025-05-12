@@ -49,10 +49,21 @@ class RandevuFragment : Fragment() {
     private var selectedDate: String = ""
     private var selectedTime: String = ""
     private var selectedDoktor: Doktor? = null
+    private var hasta:Hasta?=null
+    private var randevu:Randevu?=null
+    private val durumlar = arrayOf("Seçiniz","Tamamlandı", "Planlandı", "Onaylandı")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            hasta = it.getParcelable("hasta")
+        }
+
+        arguments?.let {
+            randevu=it.getParcelable("randevu")
+        }
+
 
     }
     @RequiresApi(Build.VERSION_CODES.O)
@@ -64,23 +75,76 @@ class RandevuFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel=viewModel
 
-        var ad = binding.hastaAd
-        var soyad = binding.hastaSoyad
-        var tc = binding.hastaTc
-        var randevusaati = binding.randevuSaati
-        var randevutarihi = binding.randevuTarihi
-
-        val fields = listOf(ad, soyad, tc, randevusaati, randevutarihi)
-
-        fun checkFields() {
-            binding.kaydetBtn.isEnabled = fields.all { it.text.toString().isNotBlank() }
+        if(hasta!=null){
+            binding.hastaAd.setText(hasta!!.ad)
+            binding.hastaSoyad.setText(hasta!!.soyad)
+            binding.hastaTc.setText(hasta!!.tcKimlikNo)
+            binding.hastaAd.isEnabled=false
+            binding.hastaSoyad.isEnabled=false
+            binding.hastaTc.isEnabled=false
         }
 
-        fields.forEach { editText ->
-            editText.addTextChangedListener {
-                checkFields()
+        if(randevu==null){
+            var ad = binding.hastaAd
+            var soyad = binding.hastaSoyad
+            var tc = binding.hastaTc
+            var randevusaati = binding.randevuSaati
+            var randevutarihi = binding.randevuTarihi
+
+            val fields = listOf(ad, soyad, tc, randevusaati, randevutarihi)
+
+            fun checkFields() {
+                binding.kaydetBtn.isEnabled = fields.all { it.text.toString().isNotBlank() }
+            }
+
+            fields.forEach { editText ->
+                editText.addTextChangedListener {
+                    checkFields()
+                }
+            }
+        }else{
+            binding.kaydetBtn.isEnabled=true
+        }
+
+        randevu?.let { randevu ->
+            binding.hastaAd.setText(randevu.hasta.ad)
+            binding.hastaSoyad.setText(randevu.hasta.soyad)
+            binding.hastaTc.setText(randevu.hasta.tcKimlikNo)
+            binding.kaydetBtn.text = "Güncelle"
+
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+            val parsedDateTime = LocalDateTime.parse(randevu.randevuTarihi, formatter)
+            selectedDate = parsedDateTime.format(DateTimeFormatter.ofPattern("d/M/yyyy"))
+            selectedTime = parsedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+            binding.randevuTarihi.setText(selectedDate)
+            binding.randevuSaati.setText(selectedTime)
+
+            viewModel.state.observe(viewLifecycleOwner, Observer { state ->
+                when (state) {
+                    is DoktorListState.Success -> {
+                        val doktorlar = state.patients
+                        val doktorAdapter = SpinnerDoktorAdapter(requireContext(), doktorlar)
+                        binding.doktorSpinner.adapter = doktorAdapter
+
+                        selectedDoktor = doktorlar.find { it.id == randevu.doktor.id }
+                        val index = doktorlar.indexOfFirst { it.id == randevu.doktor.id }
+                        if (index >= 0) {
+                            binding.doktorSpinner.setSelection(index)
+                        }
+                    }
+                    is DoktorListState.Error -> {
+                        Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
+                }
+            })
+
+            val selectedIndex = durumlar.indexOf(randevu.durum)
+            if (selectedIndex >= 0) {
+                binding.randevuDurumuSpinner.setSelection(selectedIndex)
             }
         }
+
 
         binding.geriButton.setOnClickListener {
             findNavController().popBackStack()
@@ -115,7 +179,7 @@ class RandevuFragment : Fragment() {
             )
             timePicker.show()
         }
-        val durumlar = arrayOf("Seçiniz","Tamamlandı", "Planlandı", "Onaylandı")
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, durumlar)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.randevuDurumuSpinner.adapter = adapter

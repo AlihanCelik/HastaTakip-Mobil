@@ -100,7 +100,7 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/doktor_ekle_btn"
+            android:id="@+id/randevu_ekle_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
@@ -120,8 +120,9 @@
                 android:padding="15dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="20dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/randevu"
                     app:tint="@color/white" />

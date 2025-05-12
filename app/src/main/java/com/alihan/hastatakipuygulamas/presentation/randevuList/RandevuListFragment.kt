@@ -16,6 +16,7 @@ import com.alihan.hastatakipuygulamas.databinding.FragmentPatientListBinding
 import com.alihan.hastatakipuygulamas.databinding.FragmentRandevuListBinding
 import com.alihan.hastatakipuygulamas.presentation.Adapter.PatientAdapter
 import com.alihan.hastatakipuygulamas.presentation.Adapter.RandevuAdapter
+import com.alihan.hastatakipuygulamas.presentation.patientBilgi.PatientInfoFragmentDirections
 import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListState
 import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListViewModel
 import com.alihan.hastatakipuygulamas.presentation.randevu.RandevuState
@@ -76,6 +77,11 @@ class RandevuListFragment : Fragment() {
                     binding.swipeRefresh.isRefreshing = false
                 }
             }
+        }
+
+        binding.randevuEkleBtn.setOnClickListener {
+            val action = RandevuListFragmentDirections.actionRandevuListFragmentToRandevuFragment(hasta = hasta, randevu = null)
+            findNavController().navigate(action)
         }
 
         binding.geriButton.setOnClickListener {

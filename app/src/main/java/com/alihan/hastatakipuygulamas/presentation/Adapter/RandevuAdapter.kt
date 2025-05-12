@@ -3,10 +3,13 @@ package com.alihan.hastatakipuygulamas.presentation.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.alihan.hastatakipuygulamas.R
 import com.alihan.hastatakipuygulamas.data.model.Randevu
 import com.alihan.hastatakipuygulamas.databinding.ItemRandevuBinding
+import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListFragmentDirections
+import com.alihan.hastatakipuygulamas.presentation.randevuList.RandevuListFragmentDirections
 
 class RandevuAdapter : RecyclerView.Adapter<RandevuAdapter.RandevuViewHolder>() {
 
@@ -29,6 +32,8 @@ class RandevuAdapter : RecyclerView.Adapter<RandevuAdapter.RandevuViewHolder>() 
         val randevu = randevuList[position]
         holder.view.randevu = randevu
         holder.view.itemLy.setOnClickListener {
+            val action = RandevuListFragmentDirections.actionRandevuListFragmentToRandevuFragment(hasta = null, randevu = randevu)
+            findNavController(holder.itemView).navigate(action)
 
 
         }
