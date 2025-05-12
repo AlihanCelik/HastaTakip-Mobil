@@ -61,6 +61,7 @@ class RandevuFragment : Fragment() {
         }
 
         arguments?.let {
+            viewModel.fetchDoctors()
             randevu=it.getParcelable("randevu")
         }
 
@@ -119,30 +120,6 @@ class RandevuFragment : Fragment() {
             binding.randevuTarihi.setText(selectedDate)
             binding.randevuSaati.setText(selectedTime)
 
-            viewModel.state.observe(viewLifecycleOwner, Observer { state ->
-                when (state) {
-                    is DoktorListState.Success -> {
-                        val doktorlar = state.patients
-                        val doktorAdapter = SpinnerDoktorAdapter(requireContext(), doktorlar)
-                        binding.doktorSpinner.adapter = doktorAdapter
-
-                        selectedDoktor = doktorlar.find { it.id == randevu.doktor.id }
-                        val index = doktorlar.indexOfFirst { it.id == randevu.doktor.id }
-                        if (index >= 0) {
-                            binding.doktorSpinner.setSelection(index)
-                        }
-                    }
-                    is DoktorListState.Error -> {
-                        Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
-                    }
-                    else -> {}
-                }
-            })
-
-            val selectedIndex = durumlar.indexOf(randevu.durum)
-            if (selectedIndex >= 0) {
-                binding.randevuDurumuSpinner.setSelection(selectedIndex)
-            }
         }
 
 
