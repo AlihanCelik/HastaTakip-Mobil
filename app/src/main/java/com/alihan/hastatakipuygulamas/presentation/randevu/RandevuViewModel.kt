@@ -9,6 +9,7 @@ import com.alihan.hastatakipuygulamas.data.model.Hasta
 import com.alihan.hastatakipuygulamas.data.model.Randevu
 import com.alihan.hastatakipuygulamas.domain.usecase.Doktor.GetAllDoktorUseCase
 import com.alihan.hastatakipuygulamas.domain.usecase.Randevu.AddRandevuUseCase
+import com.alihan.hastatakipuygulamas.domain.usecase.Randevu.UpdateRandevuUseCase
 import com.alihan.hastatakipuygulamas.presentation.doktorList.DoktorListState
 import com.alihan.hastatakipuygulamas.presentation.patientList.PatientListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RandevuViewModel @Inject constructor(
     private val addRandevuUseCase: AddRandevuUseCase,
-    private val getAllDoktorUseCase: GetAllDoktorUseCase):ViewModel() {
+    private val getAllDoktorUseCase: GetAllDoktorUseCase,
+    private val updateRandevuUseCase: UpdateRandevuUseCase):ViewModel() {
     private val _state = MutableLiveData<DoktorListState>()
     val state: LiveData<DoktorListState> = _state
 
@@ -48,6 +50,18 @@ class RandevuViewModel @Inject constructor(
             } catch (e: Exception) {
                 Log.e("RandevuInfoVM", "olusturma hatası: ${e.message}")
                 _state2.value = RandevuState.Error("Randevu eklenirken hata oluştu.($e)")
+            }
+        }
+    }
+
+    fun updateRandevu(id:Long,randevu: Randevu) {
+        viewModelScope.launch {
+            _state2.value = RandevuState.Loading
+            try {
+                updateRandevuUseCase(id,randevu)
+                _state2.value = RandevuState.Success(listOf(randevu))
+            } catch (e: Exception) {
+                _state2.value = RandevuState.Error(e.localizedMessage ?: "Hata")
             }
         }
     }

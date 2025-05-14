@@ -232,16 +232,6 @@ class RandevuFragment : Fragment() {
 
             val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
             val formattedDate = localDateTime.format(dateFormatter)
-
-            println("saat tarih $localDateTime")
-            println(selectedDoktor!!.ad)
-            println(selectedDoktor!!.soyad)
-            println(selectedDoktor!!.id)
-            println(selectedDoktor!!.branş)
-            println(selectedDurum)
-
-
-
             var yeniRandevu = Randevu(
                 hasta = Hasta(
                     tcKimlikNo = binding.hastaTc.text.toString().trim(),
@@ -252,13 +242,12 @@ class RandevuFragment : Fragment() {
                 durum = selectedDurum,
                 randevuTarihi = formattedDate // Formatted date'i gönderiyoruz
             )
+            if (randevu == null) {
+                viewModel.addRandevu(yeniRandevu)
+            } else {
+                randevu?.id?.let { it1 -> viewModel.updateRandevu(it1,randevu!!) }
+            }
 
-            // Gson ile JSON formatına dönüştürüp logluyoruz
-            val gson = Gson()
-            val jsonVerisi = gson.toJson(yeniRandevu)
-            println("Gönderilen JSON: $jsonVerisi")
-
-            viewModel.addRandevu(yeniRandevu)
         }
 
         binding.doktorSpinner.setOnTouchListener { _, _ ->
