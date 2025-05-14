@@ -245,7 +245,7 @@ class RandevuFragment : Fragment() {
             if (randevu == null) {
                 viewModel.addRandevu(yeniRandevu)
             } else {
-                randevu?.id?.let { it1 -> viewModel.updateRandevu(it1,randevu!!) }
+                randevu!!.id?.let { it1 -> viewModel.updateRandevu(id = it1,randevu= randevu!!) }
             }
 
         }
