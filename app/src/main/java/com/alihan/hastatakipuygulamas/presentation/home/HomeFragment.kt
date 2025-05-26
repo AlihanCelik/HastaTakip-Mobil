@@ -48,9 +48,7 @@ class HomeFragment : Fragment() {
         binding.doktorBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_doktorListFragment)
         }
-        binding.teshistedaviBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_teshisTedaviFragment)
-        }
+
         binding.randevuIslemBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_randevuFragment)
         }
